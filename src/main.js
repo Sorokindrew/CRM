@@ -18,23 +18,23 @@
                 const contactIcon = document.createElement('div');
                 contactIcon.classList.add('contact-icon');
                 if (el.type == 'Телефон' || el.type == 'Доп. телефон') {
-                    contactIcon.style = "background-image: url('./assets/img/phone.svg');";
+                    contactIcon.style = "background-image: url('../assets/img/phone.svg');";
                 }
                 else if (el.type == 'Email') {
-                    contactIcon.style = "background-image: url('./assets/img/mail.svg');";
+                    contactIcon.style = "background-image: url('../assets/img/mail.svg');";
                 }
                 else if (el.type == 'Facebook') {
-                    contactIcon.style = "background-image: url('./assets/img/fb.svg');";
+                    contactIcon.style = "background-image: url('../assets/img/fb.svg');";
                 }
                 else if (el.type == 'Vk') {
-                    contactIcon.style = "background-image: url('./assets/img/vk.svg');";
+                    contactIcon.style = "background-image: url('../assets/img/vk.svg');";
                 }
                 else {
-                    contactIcon.style = "background-image: url('./assets/img/other.svg');";
+                    contactIcon.style = "background-image: url('../assets/img/other.svg');";
                 }
                 tippy(contactIcon, {
                     content: `${el.type}: ${el.value}`
-                  });
+                });
                 cell5.style.display = 'flex';
                 cell5.style.alignItems = 'center';
                 cell5.style.flexWrap = 'wrap';
@@ -332,6 +332,9 @@
     }
 
 
+
+
+
     //Функция создания приложения
     async function createClientDb(body) {
         handlers = {
@@ -380,20 +383,40 @@
         const response = await fetch('http://localhost:3000/api/clients')
         const data = await response.json();
         //сортировка по умолчнию (по id)
-        data.sort((prev, next)=>prev.id - next.id);
+        data.sort((prev, next) => prev.id - next.id);
         //построение таблицы клиентов
         data.forEach(client => {
             const clientString = createClientString(client, handlers);
             body.append(clientString);
         });
         const idSort = document.querySelector('#id-sort');
-        idSort.addEventListener('click', ()=>{
+        idSort.addEventListener('click', () => {
             data.reverse();
             body.innerHTML = "";
             data.forEach(client => {
                 const clientString = createClientString(client, handlers);
                 body.append(clientString);
             });
+        });
+
+
+        //поиск
+        document.getElementById('search').addEventListener('input', () => {
+            let searchString = document.getElementById('search').value;
+            console.log(document.getElementById('search').value);
+            const searchTimeout = setTimeout(async () => {
+                const response = await fetch(`http://localhost:3000/api/clients?search=${searchString}`);
+                const data = await response.json();
+                body.innerHTML = '';
+                //сортировка по умолчнию (по id)
+                data.sort((prev, next) => prev.id - next.id);
+                //построение таблицы клиентов
+                data.forEach(client => {
+                    const clientString = createClientString(client, handlers);
+                    body.append(clientString);
+                });
+            }, 3000);
+           
         });
 
         //кнопка добавления контакта
