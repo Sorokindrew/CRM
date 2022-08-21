@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>База клиентов Skillbus</title>
+    <link rel="shortcut icon" href="./assets/img/logo.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./normalize.css">
+    <link rel="stylesheet" href="./style.css">
+    <script defer src="./main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            createClientDb(document.getElementById('tbody'));
+        });
+    </script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container header__container">
+            <div class="header__content flex">
+                <img src="./assets/img/logo.svg" alt="" class="header__logo">
+                <form action="" class="header__form">
+                    <input class="header__input" type="text" placeholder="Введите запрос">
+                </form>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container main__container">
+            <table id="table">
+                <caption class="table__caption">Клиенты</caption>
+                <thead>
+                    <tr>
+                        <th class="table__id">
+                            <button type="button" class="btn btn-id" id="id-sort">ID
+                                <svg width="12" height="12" view-box="0 0 12 12" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2 6L2.705 6.705L5.5 3.915L5.5 10L6.5 10L6.5 3.915L9.29 6.71L10 6L6 2L2 6Z"
+                                        fill="#9873FF" />
+                                </svg>
+                            </button>
+
+                        </th>
+                        <th class="table__name">Фамилия Имя Отчество</th>
+                        <th class="table__create">Дата и время создания</th>
+                        <th class="table__edit">Последние изменения</th>
+                        <th class="table__contacts">Контакты</th>
+                        <th class="table__actions">Действия</th>
+                    </tr>
+                </thead>
+                <tbody class="table__body" id="tbody">
+                </tbody>
+            </table>
+            <button id="add-button" class="btn btn-add">Добавить клиента</button>
+        </div>
+    </main>
+
+</body>
+
+</html>

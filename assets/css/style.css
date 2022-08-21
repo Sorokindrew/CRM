@@ -1,0 +1,420 @@
+html {
+  box-sizing: border-box;
+
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  min-width: 320px;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: #333333;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+ul,
+p,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+ul,
+p,
+button,
+a,
+label,
+input,
+select {
+  font-family: inherit;
+}
+
+a:focus,
+a:active,
+button:focus,
+button:active,
+input:focus,
+input:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
+/*global*/
+
+.container {
+  max-width: 1366px;
+  margin: 0 auto;
+}
+
+.flex {
+  display: flex;
+}
+
+.btn {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: local('OpenSans-Regular'), url('../assets/fonts/OpenSans-Regular.woff2') format('woff2'), url('../assets/fonts/OpenSans-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: local('OpenSans-Semibold'), url('../assets/fonts/OpenSans-SemiBold.woff2') format('woff2'), url('../assets/fonts/OpenSans-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: local('OpenSans-Bold'), url('../assets/fonts/OpenSans-Bold.woff2') format('woff2'), url('../assets/fonts/OpenSans-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*header*/
+
+header {
+  box-shadow: 0 5px 0 #333333;
+}
+
+/* .header__container {
+    padding: 0 20px;
+  } */
+
+.header__content {
+  padding: 20px;
+  align-items: center;
+}
+
+.header__logo {
+  margin-right: 53px;
+}
+
+.header__input {
+  min-width: 581px;
+  padding: 12px 16px;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: #B0B0B0;
+}
+
+
+/*main*/
+
+main {
+  padding-top: 40px;
+  background-color: #E5E5E5;
+  padding-bottom: 40px;
+}
+
+.main__container {
+  padding: 0 90px;
+}
+
+table {
+  margin-bottom: 40px;
+}
+
+.table__caption {
+  margin-bottom: 26px;
+  text-align: left;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 33px;
+  color: #333333;
+}
+
+thead {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #B0B0B0;
+  text-align: left;
+}
+
+.table__id {
+  min-width: 97px;
+  font: inherit;
+}
+.btn-id {
+  padding-left: 18px;
+  text-align: left;
+  width: 100%;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #B0B0B0;
+  cursor: pointer;
+}
+
+.table__name {
+  width: 369px;
+  font: inherit;
+}
+
+.table__create {
+  width: 175px;
+  font: inherit;
+}
+
+.table__edit {
+  width: 173px;
+  font: inherit;
+}
+
+.table__contacts {
+  width: 160px;
+  font: inherit;
+}
+
+.table__actions {
+  width: 207px;
+  font: inherit;
+}
+
+.table__body {
+  font-size: 14px;
+  line-height: 19px;
+  background-color: #fff;
+  
+}
+
+.table__body td {
+  height: 60px;
+}
+
+.contact-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 7px;
+}
+
+.contact-icon:nth-child(5n) {
+  margin-right: 0;
+}
+
+.btn-add {
+  display: block;
+  cursor: pointer;
+  margin: 0 auto;
+  padding: 13px 27px 13px 59px;
+  border: 1px solid #9873ff;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  color: #9873FF;
+  background-image: url('./assets/img/add_client.png');
+  background-repeat: no-repeat;
+  background-position: 27px center;
+}
+
+.btn-edit {
+  cursor: pointer;
+  padding-left: 16px;
+  margin-right: 30px;
+  background-image: url('./assets/img/edit.svg');
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+
+.btn-delete {
+  cursor: pointer;
+  padding-left: 16px;
+  background-image: url('./assets/img/cancel.svg');
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+
+
+
+
+/*modalCreate*/
+
+.modal-window {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.modal-form {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  min-height: 215px;
+  max-height: 90vh;
+  padding: 25px 30px;
+  top: 10vh;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+.modal-title {
+  min-height: 40px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.btn-add-contact {
+  max-width: 150px;
+  align-self: center;
+  text-align: center;
+  padding-left: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  background-image: url('./assets/img/add_circle_outline.svg');
+  background-repeat: no-repeat;
+  background-position: left center;
+  cursor: pointer;
+}
+
+.save-button {
+  margin: 0 auto;
+  padding: 13px 35px;
+  max-width: 147px;
+  color: #fff;
+  background-color: #9873FF;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+.btn-delete-confirm {
+  margin: 0 auto;
+  padding: 13px 35px;
+  max-width: 130px;
+  color: #fff;
+  background-color: #9873FF;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.confirm-message {
+  padding: 0 57px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 19px;
+  margin-bottom: 25px;
+}
+
+.close-button {
+  position: absolute;
+  width: 29px;
+  height: 29px;
+  top: 15px;
+  right: 15px;
+  background-image: url('./assets/img/close.svg');
+  cursor: pointer;
+}
+
+.cancel-button {
+  text-align: center;
+  text-decoration: underline;
+  font-size: 12px;
+  line-height: 16px;
+  cursor: pointer;
+}
+
+.modal-input {
+  min-width: 390px;
+  min-height: 25px;
+  padding: 0;
+  text-align: start;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #C8C5D1;
+  margin-bottom: 32px;
+}
+
+.modal-input::placeholder {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: #B0B0B0;
+}
+
+.contact-section {
+  margin: 0 -30px;
+  padding: 8px 0;
+  text-align: center;
+  background-color: #C8C5D1;
+  
+  margin-bottom: 25px;
+}
+
+.contact-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.contact-value {
+  min-height: 37px;
+}
+
+.contact-delete-button {
+  background-image: url('./assets/img/delete.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #E7E5EB;
+  cursor: pointer;
+}
+
+.span-id {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #B0B0B0;
+}
+
