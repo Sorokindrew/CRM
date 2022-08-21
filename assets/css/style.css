@@ -403,6 +403,11 @@ thead {
   min-height: 37px;
 }
 
+/* #id-svg {
+  transform: rotate(180deg);
+  transform-origin: center;
+} */
+
 .contact-delete-button {
   background-image: url('../img/delete.svg');
   background-repeat: no-repeat;

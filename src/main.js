@@ -389,6 +389,8 @@
             const clientString = createClientString(client, handlers);
             body.append(clientString);
         });
+
+        //сортировка по id
         const idSort = document.querySelector('#id-sort');
         idSort.addEventListener('click', () => {
             data.reverse();
@@ -397,6 +399,15 @@
                 const clientString = createClientString(client, handlers);
                 body.append(clientString);
             });
+            const idSvg = document.getElementById('id-svg');
+                if(idSvg._sort == 'down') {
+                    idSvg.style = 'transform: none;';
+                    idSvg._sort = 'up';
+                }
+                else {
+                    idSvg.style = 'transform: rotate(180deg); transform-origin: center;';
+                    idSvg._sort = 'down';
+                }
         });
 
 
