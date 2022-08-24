@@ -185,9 +185,46 @@ thead {
   cursor: pointer;
 }
 
-.table__name {
-  width: 369px;
-  font: inherit;
+.btn-name,
+.btn-created,
+.btn-edited {
+  text-align: left;
+  width: 100%;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #B0B0B0;
+  cursor: pointer;
+}
+
+.btn-id:hover,
+.btn-name:hover,
+.btn-created:hover,
+.btn-edited:hover {
+  color: #333333;
+}
+
+.btn-id:hover #id-svg {
+  fill: #9873FF;
+}
+.btn-name:hover #name-svg {
+  fill: #9873FF;
+}
+.btn-created:hover #created-svg {
+  fill: #9873FF;
+}
+.btn-edited:hover #edited-svg {
+  fill: #9873FF;
+}
+
+
+
+
+#id-svg,
+#name-svg,
+#created-svg,
+#edited-svg {
+  fill:  #B0B0B0;
 }
 
 .table__create {
@@ -225,6 +262,12 @@ thead {
   width: 16px;
   height: 16px;
   margin-right: 7px;
+  opacity: 0.7;
+  transition: opacity ease-in-out 0.3s;
+}
+
+.contact-icon:hover {
+  opacity: 1;
 }
 
 .contact-icon:nth-child(5n) {
@@ -254,8 +297,14 @@ thead {
   margin-right: 30px;
   background-image: url('../img/edit.svg');
   background-repeat: no-repeat;
-  background-position: left center;
+  background-position: left center; 
+  transition: color ease-in-out 0.3s;
 }
+
+.btn-edit:hover {
+  color: #9873FF;
+}
+
 
 .btn-delete {
   cursor: pointer;
@@ -263,9 +312,13 @@ thead {
   background-image: url('../img/cancel.svg');
   background-repeat: no-repeat;
   background-position: left center;
+  transition: color ease-in-out 0.3s;
 }
 
 
+.btn-delete:hover {
+  color: #F06A4D;
+}
 
 
 /*modalCreate*/
@@ -279,18 +332,21 @@ thead {
   left: 0;
 }
 
-.modal-form {
+.modal-content {
   position: fixed;
-  display: flex;
-  flex-direction: column;
-  width: 450px;
-  min-height: 215px;
-  max-height: 90vh;
-  padding: 25px 30px;
   top: 10vh;
   left: 50%;
+  width: 450px;
+  max-height: 90vh;
   transform: translateX(-50%);
   overflow-y: auto;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  min-height: 215px;
+  padding: 25px 30px;
   background-color: #fff;
 }
 
@@ -305,13 +361,16 @@ thead {
   max-width: 150px;
   align-self: center;
   text-align: center;
+  padding-top: 10px;
   padding-left: 20px;
+  padding-bottom: 10px;
   font-weight: 600;
   font-size: 14px;
   line-height: 19px;
   background-image: url('../img/add_circle_outline.svg');
   background-repeat: no-repeat;
   background-position: left center;
+  margin-bottom: 15px;
   cursor: pointer;
 }
 
@@ -401,25 +460,83 @@ thead {
 
 .contact-value {
   min-height: 37px;
+  padding-left: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  border: 0;
+  border-top: 1px solid #C8C5D1;
+  border-bottom: 1px solid #C8C5D1;
 }
-
-/* #id-svg {
-  transform: rotate(180deg);
-  transform-origin: center;
-} */
 
 .contact-delete-button {
-  background-image: url('../img/delete.svg');
-  background-repeat: no-repeat;
-  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #E7E5EB;
+  border: 1px solid #C8C5D1;
   cursor: pointer;
+  transition: border ease-in-out 0.3s;
 }
+
+.contact-delete-button svg {
+  
+  fill: #B0B0B0;
+  transition: fill ease-in-out 0.3s;
+}
+
+.contact-delete-button:hover {
+  border: 1px solid #F06A4D;
+}
+.contact-delete-button:hover svg {
+  fill: #F06A4D;
+}
+
 
 .span-id {
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
   color: #B0B0B0;
+}
+
+
+/*choices*/
+
+.choices {
+  margin-bottom: 0 !important;
+  width: 123px;
+  max-height: 37px !important;
+  box-sizing: border-box !important;
+  border:0 !important;
+  border: 1px solid #C8C5D1 !important;
+}
+
+.choices__inner {
+  padding: 0 !important;
+  min-height: 37px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  font-size: 12px !important;
+  line-height: 16px;
+}
+
+.choices__list--single {
+  padding: 6px 60px 6px 12px !important;
+}
+
+.choices__list--dropdown {
+  padding: 10px 12px !important;
+}
+
+.choices__list--dropdown .is-selected {
+  display: none;
+}
+
+
+.choices__item {
+  padding: 4px 0 !important;
+  font-size: 12px !important;
+  text-align: left;
 }
 

@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "choices.js": "^10.1.0",
+    "simplebar": "^5.3.8",
     "tippy.js": "^6.3.7"
   }
 }

@@ -9,14 +9,29 @@
     <link rel="shortcut icon" href="./assets/img/logo.svg" type="image/x-icon">
     <link rel="stylesheet" href="../assets/css/normalize.css">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/libs/choices.min.css">
+    <script src="../assets/libs/choices.min.js"></script>
+    <link rel="stylesheet" href="../assets/libs/simplebar.min.css">
+    <script src="../assets/libs/simplebar.min.js"></script>
+    <link rel="stylesheet" href="../assets/libs/tippy.css">
+    <script src="../assets/libs/popper.min.js"></script>
+    <script src="../assets/libs/tippy.umd.min.js"></script>
+    <noscript>
+        <style>
+            /**
+          * Reinstate scrolling for non-JS clients
+          */
+            .simplebar-content-wrapper {
+                overflow: auto;
+            }
+        </style>
+    </noscript>
     <script defer src="./main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             createClientDb(document.getElementById('tbody'));
         });
     </script>
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://unpkg.com/tippy.js@6"></script>
 </head>
 
 <body>
@@ -41,14 +56,37 @@
                                 <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path id="id-svg"
-                                        d="M2 6L2.705 6.705L5.5 3.915L5.5 10L6.5 10L6.5 3.915L9.29 6.71L10 6L6 2L2 6Z"
-                                        fill="#9873FF" />
+                                        d="M2 6L2.705 6.705L5.5 3.915L5.5 10L6.5 10L6.5 3.915L9.29 6.71L10 6L6 2L2 6Z" />
                                 </svg>
                             </button>
                         </th>
-                        <th class="table__name">Фамилия Имя Отчество</th>
-                        <th class="table__create">Дата и время создания</th>
-                        <th class="table__edit">Последние изменения</th>
+                        <th class="table__name">
+                            <button type="button" class="btn btn-name" id="name-sort">Фамилия Имя Отчество
+                                <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path id="name-svg"
+                                        d="M2 6L2.705 6.705L5.5 3.915L5.5 10L6.5 10L6.5 3.915L9.29 6.71L10 6L6 2L2 6Z" />
+                                </svg>
+                            </button>
+                        </th>
+                        <th class="table__create">
+                            <button type="button" class="btn btn-created" id="created-sort">Дата и время создания
+                                <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path id="created-svg"
+                                        d="M2 6L2.705 6.705L5.5 3.915L5.5 10L6.5 10L6.5 3.915L9.29 6.71L10 6L6 2L2 6Z" />
+                                </svg>
+                            </button>
+                        </th>
+                        <th class="table__edit">
+                            <button type="button" class="btn btn-edited" id="edited-sort">Последние изменения
+                                <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path id="edited-svg"
+                                        d="M2 6L2.705 6.705L5.5 3.915L5.5 10L6.5 10L6.5 3.915L9.29 6.71L10 6L6 2L2 6Z" />
+                                </svg>
+                            </button>
+                        </th>
                         <th class="table__contacts">Контакты</th>
                         <th class="table__actions">Действия</th>
                     </tr>
@@ -59,7 +97,6 @@
             <button id="add-button" class="btn btn-add">Добавить клиента</button>
         </div>
     </main>
-
 </body>
 
 </html>

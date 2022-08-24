@@ -70,12 +70,15 @@
     //создание модального окна и формы
     function modal() {
         const modal = document.createElement('div');
+        const modalContent = document.createElement('div');
         const form = document.createElement('form');
         const titleBlock = document.createElement('div');
         const closeButton = document.createElement('button');
         const cancelButton = document.createElement('button');
         modal.classList.add('modal-window');
+        modalContent.classList.add('modal-content')
         form.classList.add('modal-form');
+        form.id = 'modal-form'
         titleBlock.classList.add('modal-title');
         closeButton.classList.add('close-button', 'btn');
         closeButton.type = 'button';
@@ -85,7 +88,10 @@
         form.append(titleBlock);
         form.append(closeButton);
         form.append(cancelButton);
-        modal.append(form);
+        modalContent.append(form);
+        modal.append(modalContent);
+        modalContent.setAttribute('data-simplebar', true);
+        // new SimpleBar(document.getElementById('modal-form'));
         document.body.append(modal);
 
         closeButton.addEventListener('click', () => {
@@ -291,8 +297,11 @@
     function addContactField({ contact } = {}) {
         const contactWrapper = document.createElement('div');
         contactWrapper.classList.add('contact-wrapper');
+
         const select = document.createElement('select');
-        select.classList.add('contact-type')
+        select.classList.add('contact-type');
+
+
         const phone = document.createElement('option');
         const addPhone = document.createElement('option');
         const email = document.createElement('option');
@@ -312,13 +321,21 @@
         other.textContent = 'Другое';
         other.value = 'Другое';
         select.append(phone, addPhone, email, vk, fb, other);
+
         const contactValue = document.createElement('input');
         contactValue.classList.add('contact-value')
         const deleteContactButton = document.createElement('button');
-        deleteContactButton.type = 'button';
+        deleteContactButton.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 2C4.682 2 2 4.682 2 8C2 11.318 4.682 14 8 14C11.318 14 14 11.318 14 8C14 4.682 11.318 2 8 2ZM8 12.8C5.354 12.8 3.2 10.646 3.2 8C3.2 5.354 5.354 3.2 8 3.2C10.646 3.2 12.8 5.354 12.8 8C12.8 10.646 10.646 12.8 8 12.8ZM10.154 5L8 7.154L5.846 5L5 5.846L7.154 8L5 10.154L5.846 11L8 8.846L10.154 11L11 10.154L8.846 8L11 5.846L10.154 5Z"/>
+        </svg>`;
+
+        
         deleteContactButton.classList.add('btn', 'contact-delete-button')
         deleteContactButton.style.width = '27px';
         deleteContactButton.style.height = '37px';
+        tippy(deleteContactButton, {
+            content: `Удалить контакт`
+        });
         deleteContactButton.addEventListener('click', () => {
             contactWrapper.remove()
         });
@@ -328,6 +345,11 @@
         };
 
         contactWrapper.append(select, contactValue, deleteContactButton);
+        const choices = new Choices(select, {
+            searchEnabled: false,
+            shouldSort: false,
+            itemSelectText: '',
+        });
         return contactWrapper;
     }
 
@@ -400,14 +422,14 @@
                 body.append(clientString);
             });
             const idSvg = document.getElementById('id-svg');
-                if(idSvg._sort == 'down') {
-                    idSvg.style = 'transform: none;';
-                    idSvg._sort = 'up';
-                }
-                else {
-                    idSvg.style = 'transform: rotate(180deg); transform-origin: center;';
-                    idSvg._sort = 'down';
-                }
+            if (idSvg._sort == 'down') {
+                idSvg.style = 'transform: none;';
+                idSvg._sort = 'up';
+            }
+            else {
+                idSvg.style = 'transform: rotate(180deg); transform-origin: center;';
+                idSvg._sort = 'down';
+            }
         });
 
 
@@ -427,7 +449,7 @@
                     body.append(clientString);
                 });
             }, 3000);
-           
+
         });
 
         //кнопка добавления контакта
