@@ -174,17 +174,8 @@ thead {
   min-width: 97px;
   font: inherit;
 }
-.btn-id {
-  padding-left: 18px;
-  text-align: left;
-  width: 100%;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 16px;
-  color: #B0B0B0;
-  cursor: pointer;
-}
 
+.btn-id,
 .btn-name,
 .btn-created,
 .btn-edited {
@@ -197,6 +188,25 @@ thead {
   cursor: pointer;
 }
 
+.btn-id {
+  padding-left: 18px;
+}
+
+.js-sort-btn--active {
+  color: #9873FF;
+}
+
+.btn-id path,
+.btn-name path,
+.btn-created path,
+.btn-edited path {
+  fill:  #B0B0B0;
+}
+
+.js-sort-btn--active path {
+  fill: #9873FF;
+}
+
 .btn-id:hover,
 .btn-name:hover,
 .btn-created:hover,
@@ -204,28 +214,16 @@ thead {
   color: #333333;
 }
 
-.btn-id:hover #id-svg {
-  fill: #9873FF;
-}
-.btn-name:hover #name-svg {
-  fill: #9873FF;
-}
-.btn-created:hover #created-svg {
-  fill: #9873FF;
-}
-.btn-edited:hover #edited-svg {
+
+
+.btn-id:hover path,
+.btn-name:hover path,
+.btn-created:hover path,
+.btn-edited:hover path {
   fill: #9873FF;
 }
 
 
-
-
-#id-svg,
-#name-svg,
-#created-svg,
-#edited-svg {
-  fill:  #B0B0B0;
-}
 
 .table__create {
   width: 175px;
@@ -251,7 +249,7 @@ thead {
   font-size: 14px;
   line-height: 19px;
   background-color: #fff;
-  
+
 }
 
 .table__body td {
@@ -297,7 +295,7 @@ thead {
   margin-right: 30px;
   background-image: url('../img/edit.svg');
   background-repeat: no-repeat;
-  background-position: left center; 
+  background-position: left center;
   transition: color ease-in-out 0.3s;
 }
 
@@ -383,6 +381,7 @@ thead {
   margin-bottom: 5px;
   cursor: pointer;
 }
+
 .btn-delete-confirm {
   margin: 0 auto;
   padding: 13px 35px;
@@ -447,7 +446,7 @@ thead {
   padding: 8px 0;
   text-align: center;
   background-color: #C8C5D1;
-  
+
   margin-bottom: 25px;
 }
 
@@ -480,7 +479,7 @@ thead {
 }
 
 .contact-delete-button svg {
-  
+
   fill: #B0B0B0;
   transition: fill ease-in-out 0.3s;
 }
@@ -488,6 +487,7 @@ thead {
 .contact-delete-button:hover {
   border: 1px solid #F06A4D;
 }
+
 .contact-delete-button:hover svg {
   fill: #F06A4D;
 }
@@ -508,7 +508,7 @@ thead {
   width: 123px;
   max-height: 37px !important;
   box-sizing: border-box !important;
-  border:0 !important;
+  border: 0 !important;
   border: 1px solid #C8C5D1 !important;
 }
 
@@ -539,4 +539,3 @@ thead {
   font-size: 12px !important;
   text-align: left;
 }
-

@@ -329,7 +329,7 @@
         <path d="M8 2C4.682 2 2 4.682 2 8C2 11.318 4.682 14 8 14C11.318 14 14 11.318 14 8C14 4.682 11.318 2 8 2ZM8 12.8C5.354 12.8 3.2 10.646 3.2 8C3.2 5.354 5.354 3.2 8 3.2C10.646 3.2 12.8 5.354 12.8 8C12.8 10.646 10.646 12.8 8 12.8ZM10.154 5L8 7.154L5.846 5L5 5.846L7.154 8L5 10.154L5.846 11L8 8.846L10.154 11L11 10.154L8.846 8L11 5.846L10.154 5Z"/>
         </svg>`;
 
-        
+
         deleteContactButton.classList.add('btn', 'contact-delete-button')
         deleteContactButton.style.width = '27px';
         deleteContactButton.style.height = '37px';
@@ -351,6 +351,67 @@
             itemSelectText: '',
         });
         return contactWrapper;
+    }
+
+    async function getData() {
+        //запрос актуальной информации с данными существующих клиентов с сервера
+        const response = await fetch('http://localhost:3000/api/clients')
+        return await response.json();
+    }
+
+    async function searchData(searchString) {
+        const response = await fetch(`http://localhost:3000/api/clients?search=${searchString}`);
+        const data = await response.json();
+        return data
+    }
+
+
+    //функция отрисовки данных таблицы
+    function renderData({ data, body }) {
+
+        //построение таблицы клиентов
+        data.forEach(client => {
+            const clientString = createClientString(client, handlers);
+            body.append(clientString);
+        });
+    };
+
+
+    //функция сортировки и изменения иконки порядка сортировки
+    function sortData(data, value) {
+
+        const svg = document.getElementById(`${value}-svg`);
+        //сортировка по возрастанию 
+        if (svg._sort == 'down' || !svg._sort) {
+            svg._sort = 'up';
+            svg.style = 'transform: none;';
+            if (value == 'id') {
+                data.sort((prev, next) => prev[`${value}`] - next[`${value}`]);
+            }
+            else {
+                data.sort((prev, next) => {
+                    if (prev[`${value}`] < next[`${value}`]) return -1;
+                    else if (prev[`${value}`] > next[`${value}`]) return 1;
+                    else return 0;
+                })
+            }
+        }
+        //сщортировка по убыванию 
+        else {
+            svg.style = 'transform: rotate(180deg); transform-origin: center;';
+            svg._sort = 'down';
+            if (value == 'id') {
+                data.sort((prev, next) => next[`${value}`] - prev[`${value}`]);
+            }
+            else {
+                data.sort((prev, next) => {
+                    if (prev[`${value}`] < next[`${value}`]) return 1;
+                    else if (prev[`${value}`] > next[`${value}`]) return -1;
+                    else return 0;
+                })
+
+            }
+        }
     }
 
 
@@ -401,55 +462,44 @@
             }
         };
 
-        //запрос информации при загрузке приложения
-        const response = await fetch('http://localhost:3000/api/clients')
-        const data = await response.json();
+        const data = await getData();
         //сортировка по умолчнию (по id)
-        data.sort((prev, next) => prev.id - next.id);
-        //построение таблицы клиентов
-        data.forEach(client => {
-            const clientString = createClientString(client, handlers);
-            body.append(clientString);
-        });
+        sortData(data, 'id');
+        renderData({ data, body });
 
-        //сортировка по id
-        const idSort = document.querySelector('#id-sort');
-        idSort.addEventListener('click', () => {
-            data.reverse();
-            body.innerHTML = "";
-            data.forEach(client => {
-                const clientString = createClientString(client, handlers);
-                body.append(clientString);
-            });
-            const idSvg = document.getElementById('id-svg');
-            if (idSvg._sort == 'down') {
-                idSvg.style = 'transform: none;';
-                idSvg._sort = 'up';
-            }
-            else {
-                idSvg.style = 'transform: rotate(180deg); transform-origin: center;';
-                idSvg._sort = 'down';
-            }
-        });
+        const buttonSort = document.querySelectorAll('.js-sort-btn');
+        buttonSort.forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.id;
+                buttonSort.forEach(el => {
+                    el.classList.remove('js-sort-btn--active')
+                });
+                button.classList.add('js-sort-btn--active');
+                let value = id.replace('-sort', '');
+                sortData(data, value);
+                body.innerHTML = '';
+                renderData({ data, body });
+            })
+        })
 
 
         //поиск
         document.getElementById('search').addEventListener('input', () => {
-            let searchString = document.getElementById('search').value;
-            console.log(document.getElementById('search').value);
-            const searchTimeout = setTimeout(async () => {
-                const response = await fetch(`http://localhost:3000/api/clients?search=${searchString}`);
-                const data = await response.json();
+            
+            const searchTimeout = setTimeout(()=>{
+                let searchString = document.getElementById('search').value;
+                let data = await searchData(searchString);
+                console.log(data)
                 body.innerHTML = '';
-                //сортировка по умолчнию (по id)
-                data.sort((prev, next) => prev.id - next.id);
-                //построение таблицы клиентов
-                data.forEach(client => {
-                    const clientString = createClientString(client, handlers);
-                    body.append(clientString);
-                });
-            }, 3000);
-
+                renderData({ data, body })
+            }, 3000)
+            
+            // let data = [];
+            
+            // const searchTimeout = setTimeout(searchData, 3000, searchString)
+            // const response = await fetch(`http://localhost:3000/api/clients?search=${searchString}`);
+            // const data = await response.json();
+            
         });
 
         //кнопка добавления контакта
