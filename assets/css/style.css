@@ -322,7 +322,7 @@ thead {
 /*modalCreate*/
 
 .modal-window {
-  position: absolute;
+  position: fixed;
   background-color: rgba(0, 0, 0, 0.8);
   top: 0;
   right: 0;
@@ -331,7 +331,7 @@ thead {
 }
 
 .modal-content {
-  position: fixed;
+  position: absolute;
   top: 10vh;
   left: 50%;
   width: 450px;

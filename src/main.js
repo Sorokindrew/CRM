@@ -2,16 +2,27 @@
 
     // функция создания строки с информацией о клиенте и кнопками изменить / удалить
     function createClientString(client, { onEdit, onDelete, onUpdate }) {
-        let row = document.createElement('tr');
-        let cell1 = document.createElement('td');
+        const row = document.createElement('tr');
+        const cell1 = document.createElement('td');
         cell1.textContent = client.id;
-        let cell2 = document.createElement('td');
+        cell1.style = "font-size: 12px; line-height: 16px; color: #B0B0B0;"
+        const cell2 = document.createElement('td');
         cell2.textContent = client.surname + ' ' + client.name + ' ' + client.lastName;
-        let cell3 = document.createElement('td');
-        cell3.textContent = formatDate(client.createdAt)
-        let cell4 = document.createElement('td');
-        cell4.textContent = formatDate(client.updatedAt);
-        let cell5 = document.createElement('td');
+        const cell3 = document.createElement('td');
+        const createdSpan = document.createElement('span');
+        cell3.textContent = formatDate(client.createdAt).date;
+        createdSpan.textContent = formatDate(client.createdAt).time;
+        createdSpan.style.color = '#B0B0B0';
+        createdSpan.style.paddingLeft = '7px';
+        cell3.append(createdSpan);
+        const cell4 = document.createElement('td');
+        const updatedSpan = document.createElement('span');
+        cell4.textContent = formatDate(client.updatedAt).date;
+        updatedSpan.textContent = formatDate(client.updatedAt).time;
+        updatedSpan.style.color = '#B0B0B0';
+        updatedSpan.style.paddingLeft = '7px';
+        cell4.append(updatedSpan);
+        const cell5 = document.createElement('td');
         const contactList = client.contacts;
         if (contactList.length > 0) {
             contactList.forEach(el => {
@@ -42,16 +53,16 @@
                 cell5.append(contactIcon);
             });
         }
-        let cell6 = document.createElement('td');
-        let buttonWrapper = document.createElement('div');
-        let editClientButton = document.createElement('button');
+        const cell6 = document.createElement('td');
+        const buttonWrapper = document.createElement('div');
+        const editClientButton = document.createElement('button');
         editClientButton.textContent = 'Изменить';
         editClientButton.id = 'btn-edit';
         editClientButton.classList.add('btn', 'btn-edit')
         editClientButton.addEventListener('click', () => {
             modalEdit(client, { onEdit, onUpdate, onDelete, element: row });
         });
-        let deleteClientButton = document.createElement('button');
+        const deleteClientButton = document.createElement('button');
         deleteClientButton.textContent = 'Удалить';
         deleteClientButton.id = 'btn-delete';
         deleteClientButton.classList.add('btn', 'btn-delete');
@@ -69,6 +80,7 @@
 
     //создание модального окна и формы
     function modal() {
+        document.body.style.overflowY = 'hidden';
         const modal = document.createElement('div');
         const modalContent = document.createElement('div');
         const form = document.createElement('form');
@@ -100,10 +112,14 @@
 
         closeButton.addEventListener('click', () => {
             modal.remove()
+            document.body.style.overflowY = 'scroll';
+
         });
 
         cancelButton.addEventListener('click', () => {
             modal.remove()
+            document.body.style.overflowY = 'scroll';
+
         });
     }
 
@@ -214,6 +230,8 @@
         deleteClientButton.addEventListener('click', () => {
             const modal = document.querySelector('.modal-window');
             modal.remove();
+            document.body.style.overflowY = 'scroll';
+
             modalDelete(client, { onDelete, element });
         });
 
@@ -295,7 +313,10 @@
         let month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
         let hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
         let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
-        return day + '.' + month + '.' + date.getFullYear() + ' ' + hours + ':' + minutes;
+        return {
+            date: day + '.' + month + '.' + date.getFullYear(),
+            time: hours + ':' + minutes
+        };
     };
 
 
@@ -371,13 +392,13 @@
         });
         return contactWrapper;
     }
-
+    //запрос данных с сервера
     async function getData() {
         //запрос актуальной информации с данными существующих клиентов с сервера
         const response = await fetch('http://localhost:3000/api/clients')
         return await response.json();
     }
-
+    //поиск данных по введенному значению
     async function searchData(searchString, body) {
         const response = await fetch(`http://localhost:3000/api/clients?search=${searchString}`);
         const data = await response.json();
@@ -412,11 +433,21 @@
                 data.sort((prev, next) => {
                     if (prev[`${value}`] < next[`${value}`]) return -1;
                     else if (prev[`${value}`] > next[`${value}`]) return 1;
-                    else return 0;
+                    else {
+                        if (value == 'surname') {
+                            if (prev.name < next.name) return -1;
+                            else if (prev.name > next.name) return 1;
+                            else {
+                                if (prev.lastName < next.lastName) return -1;
+                                else if (prev.lastName > next.lastName) return 1;
+                                else return 0;
+                            }
+                        }
+                    };
                 })
             }
         }
-        //сщортировка по убыванию 
+        //сортировка по убыванию 
         else {
             svg.style = 'transform: rotate(180deg); transform-origin: center;';
             svg._sort = 'down';
@@ -427,7 +458,17 @@
                 data.sort((prev, next) => {
                     if (prev[`${value}`] < next[`${value}`]) return 1;
                     else if (prev[`${value}`] > next[`${value}`]) return -1;
-                    else return 0;
+                    else {
+                        if (value == 'surname') {
+                            if (prev.name < next.name) return 1;
+                            else if (prev.name > next.name) return -1;
+                            else {
+                                if (prev.lastName < next.lastName) return 1;
+                                else if (prev.lastName > next.lastName) return -1;
+                                else return 0;
+                            }
+                        }
+                    };
                 })
 
             }
@@ -476,6 +517,7 @@
             },
             onDelete({ client, element }) {
                 element.remove()
+                document.body.style.overflowY = 'scroll';
                 fetch(`http://localhost:3000/api/clients/${client.id}`, {
                     method: 'DELETE',
                 })
