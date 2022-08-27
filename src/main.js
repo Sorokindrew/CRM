@@ -49,7 +49,7 @@
         editClientButton.id = 'btn-edit';
         editClientButton.classList.add('btn', 'btn-edit')
         editClientButton.addEventListener('click', () => {
-            modalEdit(client, { onEdit, onUpdate, element: row });
+            modalEdit(client, { onEdit, onUpdate, onDelete, element: row });
         });
         let deleteClientButton = document.createElement('button');
         deleteClientButton.textContent = 'Удалить';
@@ -75,6 +75,7 @@
         const titleBlock = document.createElement('div');
         const closeButton = document.createElement('button');
         const cancelButton = document.createElement('button');
+        const deleteClientButton = document.createElement('button');
         modal.classList.add('modal-window');
         modalContent.classList.add('modal-content')
         form.classList.add('modal-form');
@@ -85,13 +86,16 @@
         cancelButton.textContent = 'Отмена';
         cancelButton.classList.add('btn', 'cancel-button');
         cancelButton.type = 'button'
+        deleteClientButton.textContent = 'Удалить клиента';
+        deleteClientButton.classList.add('btn', 'delete-button');
+        deleteClientButton.type = 'button'
         form.append(titleBlock);
         form.append(closeButton);
         form.append(cancelButton);
+        form.append(deleteClientButton);
         modalContent.append(form);
         modal.append(modalContent);
         modalContent.setAttribute('data-simplebar', true);
-        // new SimpleBar(document.getElementById('modal-form'));
         document.body.append(modal);
 
         closeButton.addEventListener('click', () => {
@@ -136,6 +140,8 @@
         contactSection.append(addContactButton);
         lastName.after(contactSection);
         contactSection.after(saveButton);
+        const deleteClientButton = document.querySelector('.delete-button');
+        deleteClientButton.style.display = 'none';
 
         addContactButton.addEventListener('click', () => {
             addContactButton.before(addContactField());
@@ -161,7 +167,7 @@
     };
 
     //модальное окно редактирования данных клиента
-    async function modalEdit(client, { onEdit, onUpdate, element }) {
+    async function modalEdit(client, { onEdit, onUpdate, onDelete, element }) {
         const inputClass = 'modal-input';
         modal();
         let clientData = await onEdit(client);
@@ -200,6 +206,17 @@
         contactSection.append(addContactButton);
         lastName.after(contactSection);
         contactSection.after(saveButton);
+        const cancelButton = document.querySelector('.cancel-button');
+        const deleteClientButton = document.querySelector('.delete-button');
+        cancelButton.style.display = 'none';
+        console.log(deleteClientButton)
+
+        deleteClientButton.addEventListener('click', () => {
+            const modal = document.querySelector('.modal-window');
+            modal.remove();
+            modalDelete(client, { onDelete, element });
+        });
+
 
         let contactList = client.contacts;
         contactList.forEach(contact => {
@@ -259,6 +276,8 @@
         deleteClientConfirm.classList.add('btn', 'btn-delete-confirm');
         deleteClientConfirm.type = 'button';
         deleteClientConfirm.textContent = 'Удалить';
+        const deleteClientButton = document.querySelector('.delete-button');
+        deleteClientButton.style.display = 'none';
         deleteClientConfirm.addEventListener('click', () => {
             element.remove();
             onDelete({ client, element: modalWindow });
@@ -359,10 +378,11 @@
         return await response.json();
     }
 
-    async function searchData(searchString) {
+    async function searchData(searchString, body) {
         const response = await fetch(`http://localhost:3000/api/clients?search=${searchString}`);
         const data = await response.json();
-        return data
+        body.innerHTML = '';
+        renderData({ data, body })
     }
 
 
@@ -467,6 +487,7 @@
         sortData(data, 'id');
         renderData({ data, body });
 
+        // обработчики кнопок сортировки
         const buttonSort = document.querySelectorAll('.js-sort-btn');
         buttonSort.forEach(button => {
             button.addEventListener('click', () => {
@@ -485,21 +506,11 @@
 
         //поиск
         document.getElementById('search').addEventListener('input', () => {
-            
-            const searchTimeout = setTimeout(()=>{
+
+            const searchTimeout = setTimeout(() => {
                 let searchString = document.getElementById('search').value;
-                let data = await searchData(searchString);
-                console.log(data)
-                body.innerHTML = '';
-                renderData({ data, body })
+                searchData(searchString, body);
             }, 3000)
-            
-            // let data = [];
-            
-            // const searchTimeout = setTimeout(searchData, 3000, searchString)
-            // const response = await fetch(`http://localhost:3000/api/clients?search=${searchString}`);
-            // const data = await response.json();
-            
         });
 
         //кнопка добавления контакта

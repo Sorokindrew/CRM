@@ -410,7 +410,8 @@ thead {
   cursor: pointer;
 }
 
-.cancel-button {
+.cancel-button,
+.delete-button {
   text-align: center;
   text-decoration: underline;
   font-size: 12px;
