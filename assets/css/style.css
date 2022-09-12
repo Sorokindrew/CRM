@@ -146,7 +146,14 @@ main {
 }
 
 table {
+  width: 100%;
+  border-collapse: collapse;
   margin-bottom: 40px;
+}
+
+td,
+th {
+  padding: 0;
 }
 
 .table__caption {
@@ -171,7 +178,7 @@ thead {
 }
 
 .table__id {
-  min-width: 97px;
+  width: calc(100 / 1186 * 100%);
   font: inherit;
 }
 
@@ -225,23 +232,27 @@ thead {
 
 
 
+.table__name {
+  width: calc(370 / 1186 * 100%);
+  font: inherit;
+}
 .table__create {
-  width: 175px;
+  width: calc(175 / 1186 * 100%);
   font: inherit;
 }
 
 .table__edit {
-  width: 173px;
+  width: calc(173 / 1186 * 100%);
   font: inherit;
 }
 
 .table__contacts {
-  width: 160px;
+  width: calc(160 / 1186 * 100%);
   font: inherit;
 }
 
 .table__actions {
-  width: 207px;
+  width: calc(207 / 1186 * 100%);
   font: inherit;
 }
 

@@ -56,9 +56,14 @@
         const cell6 = document.createElement('td');
         const buttonWrapper = document.createElement('div');
         const editClientButton = document.createElement('button');
+        // <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        const editButtonSpinner = document.createElement('span');
+        editButtonSpinner.classList.add('spinner-border', 'spinner-border-sm', 'text-secondary');
+        editButtonSpinner.setAttribute('role', 'status')
         editClientButton.textContent = 'Изменить';
         editClientButton.id = 'btn-edit';
-        editClientButton.classList.add('btn', 'btn-edit')
+        editClientButton.classList.add('btn', 'btn-edit');
+        editClientButton.appendChild(editButtonSpinner);
         editClientButton.addEventListener('click', () => {
             modalEdit(client, { onEdit, onUpdate, onDelete, element: row });
         });
@@ -149,6 +154,7 @@
         surname.placeholder = 'Фамилия*';
         surname.required = true;
         name.placeholder = 'Имя*';
+        name.required=true;
         lastName.placeholder = 'Отчество';
         titleBlock.after(lastName);
         titleBlock.after(name);
@@ -409,7 +415,7 @@
 
     //функция отрисовки данных таблицы
     function renderData({ data, body }) {
-
+        console.log(data)
         //построение таблицы клиентов
         data.forEach(client => {
             const clientString = createClientString(client, handlers);
@@ -420,7 +426,6 @@
 
     //функция сортировки и изменения иконки порядка сортировки
     function sortData(data, value) {
-
         const svg = document.getElementById(`${value}-svg`);
         //сортировка по возрастанию 
         if (svg._sort == 'down' || !svg._sort) {
@@ -524,7 +529,7 @@
             }
         };
 
-        const data = await getData();
+        let data = await getData();
         //сортировка по умолчнию (по id)
         sortData(data, 'id');
         renderData({ data, body });
@@ -532,8 +537,9 @@
         // обработчики кнопок сортировки
         const buttonSort = document.querySelectorAll('.js-sort-btn');
         buttonSort.forEach(button => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', async () => {
                 const id = button.id;
+                data = await getData();
                 buttonSort.forEach(el => {
                     el.classList.remove('js-sort-btn--active')
                 });
