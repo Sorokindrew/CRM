@@ -57,20 +57,20 @@
         const buttonWrapper = document.createElement('div');
         const editClientButton = document.createElement('button');
         // <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        const editButtonSpinner = document.createElement('span');
-        editButtonSpinner.classList.add('spinner-border', 'spinner-border-sm', 'text-secondary');
-        editButtonSpinner.setAttribute('role', 'status')
+        // const editButtonSpinner = document.createElement('span');
+        // editButtonSpinner.classList.add('spinner-border', 'spinner-border-sm', 'text-secondary');
+        // editButtonSpinner.setAttribute('role', 'status')
         editClientButton.textContent = 'Изменить';
         editClientButton.id = 'btn-edit';
-        editClientButton.classList.add('btn', 'btn-edit');
-        editClientButton.appendChild(editButtonSpinner);
+        editClientButton.classList.add('btn-reset', 'btn-edit');
+        // editClientButton.appendChild(editButtonSpinner);
         editClientButton.addEventListener('click', () => {
             modalEdit(client, { onEdit, onUpdate, onDelete, element: row });
         });
         const deleteClientButton = document.createElement('button');
         deleteClientButton.textContent = 'Удалить';
         deleteClientButton.id = 'btn-delete';
-        deleteClientButton.classList.add('btn', 'btn-delete');
+        deleteClientButton.classList.add('btn-reset', 'btn-delete');
         deleteClientButton.addEventListener('click', () => {
             modalDelete(client, { onDelete, element: row });
 
@@ -90,23 +90,26 @@
         const modalContent = document.createElement('div');
         const form = document.createElement('form');
         const titleBlock = document.createElement('div');
+        const errorBlock = document.createElement('div');
         const closeButton = document.createElement('button');
         const cancelButton = document.createElement('button');
         const deleteClientButton = document.createElement('button');
         modal.classList.add('modal-window');
         modalContent.classList.add('modal-content')
         form.classList.add('modal-form');
-        form.id = 'modal-form'
+        form.id = 'modal-form';
+        errorBlock.id = 'errorBlock';
         titleBlock.classList.add('modal-title');
-        closeButton.classList.add('close-button', 'btn');
+        closeButton.classList.add('close-button', 'btn-reset');
         closeButton.type = 'button';
         cancelButton.textContent = 'Отмена';
-        cancelButton.classList.add('btn', 'cancel-button');
+        cancelButton.classList.add('btn-reset', 'cancel-button');
         cancelButton.type = 'button'
         deleteClientButton.textContent = 'Удалить клиента';
-        deleteClientButton.classList.add('btn', 'delete-button');
+        deleteClientButton.classList.add('btn-reset', 'delete-button');
         deleteClientButton.type = 'button'
         form.append(titleBlock);
+        form.append(errorBlock);
         form.append(closeButton);
         form.append(cancelButton);
         form.append(deleteClientButton);
@@ -137,31 +140,36 @@
         const saveButton = document.createElement('button');
         const contactSection = document.createElement('div');
         const addContactButton = document.createElement('button');
+        // const nameLabel = document.createElement('label');
         const name = document.createElement('input');
         const surname = document.createElement('input');
         const lastName = document.createElement('input');
+
         saveButton.textContent = 'Сохранить';
         const titleBlock = document.querySelector('.modal-title');
         titleBlock.textContent = 'Новый клиент';
         name.classList.add(inputClass);
         surname.classList.add(inputClass);
         lastName.classList.add(inputClass);
-        saveButton.classList.add('save-button', 'btn');
+
+        saveButton.classList.add('save-button', 'btn-reset');
         contactSection.classList.add('contact-section');
         addContactButton.textContent = 'Добавить контакт';
-        addContactButton.classList.add('btn', 'btn-add-contact')
+        addContactButton.classList.add('btn-reset', 'btn-add-contact')
         addContactButton.type = 'button';
         surname.placeholder = 'Фамилия*';
         surname.required = true;
         name.placeholder = 'Имя*';
-        name.required=true;
+        name.required = true;
+        // nameLabel.append(name);
         lastName.placeholder = 'Отчество';
         titleBlock.after(lastName);
         titleBlock.after(name);
         titleBlock.after(surname);
         contactSection.append(addContactButton);
         lastName.after(contactSection);
-        contactSection.after(saveButton);
+        const errorBlock = document.getElementById('errorBlock')
+        errorBlock.after(saveButton);
         const deleteClientButton = document.querySelector('.delete-button');
         deleteClientButton.style.display = 'none';
 
@@ -169,7 +177,12 @@
             addContactButton.before(addContactField());
         });
 
-        saveButton.addEventListener('click', (e) => {
+        // name.addEventListener('input', ()=>{
+        //     nameLabel.innerHTML = 'Name' + nameLabel.innerHTML;
+        //     name.focus();
+        // })
+
+        saveButton.addEventListener('click', async (e) => {
             e.preventDefault();
             let contacts = [];
             let arr = Array.from(document.querySelectorAll('.contact-wrapper'));
@@ -184,8 +197,14 @@
                 'lastName': lastName.value,
                 'contacts': contacts,
             };
-            onSave({ client, element: modalWindow });
+            let check = checkInput({ name, surname })
+            if (check)
+                errorBlock.innerHTML = check;
+
+            else
+                onSave({ client, element: modalWindow });
         });
+
     };
 
     //модальное окно редактирования данных клиента
@@ -210,10 +229,10 @@
         name.classList.add(inputClass);
         surname.classList.add(inputClass);
         lastName.classList.add(inputClass);
-        saveButton.classList.add('save-button', 'btn');
+        saveButton.classList.add('save-button', 'btn-reset');
         contactSection.classList.add('contact-section');
         addContactButton.textContent = 'Добавить контакт';
-        addContactButton.classList.add('btn', 'btn-add-contact')
+        addContactButton.classList.add('btn-reset', 'btn-add-contact')
         addContactButton.type = 'button';
         // surname.placeholder = 'Фамилия*';
         surname.value = clientData.surname;
@@ -297,7 +316,7 @@
         confirmMessage.textContent = 'Вы действительно хотите удалить данного клиента?';
         confirmMessage.classList.add('confirm-message');
         const deleteClientConfirm = document.createElement('button');
-        deleteClientConfirm.classList.add('btn', 'btn-delete-confirm');
+        deleteClientConfirm.classList.add('btn-reset', 'btn-delete-confirm');
         deleteClientConfirm.type = 'button';
         deleteClientConfirm.textContent = 'Удалить';
         const deleteClientButton = document.querySelector('.delete-button');
@@ -376,7 +395,7 @@
         </svg>`;
 
 
-        deleteContactButton.classList.add('btn', 'contact-delete-button')
+        deleteContactButton.classList.add('btn-reset', 'contact-delete-button')
         deleteContactButton.style.width = '27px';
         deleteContactButton.style.height = '37px';
         tippy(deleteContactButton, {
@@ -402,6 +421,8 @@
     async function getData() {
         //запрос актуальной информации с данными существующих клиентов с сервера
         const response = await fetch('http://localhost:3000/api/clients')
+        const spinner = document.getElementById('spinner');
+        if (response) spinner.style.display = 'none';
         return await response.json();
     }
     //поиск данных по введенному значению
@@ -412,10 +433,39 @@
         renderData({ data, body })
     }
 
+    //Функция валидация полей формы ФИО клиента
+    function checkInput({ name, surname }) {
+        let response = '';
+        const regEx = /[А-ЯA-Z][а-яa-z]+/;
+        if (!name.value) response = response + 'Задайте имя клиента<br>';
+        else if (name.value.length < 4) response = response + 'Имя должно быть более трех символов<br>';
+        else if (!name.value.match(/^[А-ЯA-Z]/)) response = response + 'Имя должно начинаться с заглавной буквы<br>';
+        else if (!name.value.match(regEx)) response = response + 'Имя должно содержать только буквы<br>';
+        if (!surname.value) response = response + 'Задайте фамилию клиента<br>';
+        else if (surname.value.length < 4) response = response + 'Фамилия должна быть более трех символов<br>';
+        else if (!surname.value.match(/^[А-ЯA-Z]/)) response = response + 'Фамилия должна начинаться с заглавной буквы<br>';
+        else if (!surname.value.match(regEx)) response = response + 'Фамилия должна содержать только буквы<br>';
+        let contactSelectToCheck = Array.from(document.querySelectorAll('.contact-type'));
+        let contactValueToCheck = Array.from(document.querySelectorAll('.contact-value'));
+        for (let index=0; index < contactSelectToCheck.length; index++) {
+            if (contactSelectToCheck[index].value == 'Email') {
+                const regExEmail = /\w+@\w+.[^0-9_\s\W]{2,4}/;
+                if (!contactValueToCheck[index].value.match(regExEmail)) response = response + 'Неверный формат электронной почты<br>'; 
+            }
+            else if (contactSelectToCheck[index].value == 'Телефон' || contactSelectToCheck[index].value == 'Доп. телефон') {
+                const regExPhone = /\+7 \([0-9]{3,5}\) [0-9]{3}-[0-9]{2}-[0-9]{2}/;
+                if (!contactValueToCheck[index].value.match(regExPhone)) response = response + 'Введите телефон в формате +7 (495) 333-33-33<br>';
+                
+            }
+        }
+
+        
+        if (response) return response;
+    }
+
 
     //функция отрисовки данных таблицы
     function renderData({ data, body }) {
-        console.log(data)
         //построение таблицы клиентов
         data.forEach(client => {
             const clientString = createClientString(client, handlers);
@@ -509,11 +559,13 @@
                 }
             },
             async onSave({ client, element }) {
+                
                 const response = await fetch(`http://localhost:3000/api/clients/`, {
                     method: "POST",
                     headers: { 'Content-Type': "application/json" },
                     body: JSON.stringify(client),
                 });
+                
                 if (response.status == 200 || response.status == 201) {
                     element.remove();
                     const clientData = await response.json();

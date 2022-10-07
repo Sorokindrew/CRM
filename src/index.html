@@ -8,8 +8,9 @@
     <title>База клиентов Skillbus</title>
     <link rel="shortcut icon" href="../assets/img/logo.svg" type="image/x-icon">
     <link rel="stylesheet" href="../assets/css/normalize.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/libs/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/libs/choices.min.css">
+    <script src="../assets/libs/bootstrap.min.js"></script>
     <script src="../assets/libs/choices.min.js"></script>
     <link rel="stylesheet" href="../assets/libs/simplebar.min.css">
     <script src="../assets/libs/simplebar.min.js"></script>
@@ -17,6 +18,7 @@
     <script src="../assets/libs/popper.min.js"></script>
     <script src="../assets/libs/tippy.umd.min.js"></script>
     <script src="../assets/libs/just-validate.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
     <noscript>
         <style>
             /**
@@ -48,12 +50,13 @@
     </header>
     <main>
         <div class="container main__container">
-            <table id="table">
+            <table class="main-table" id="table">
                 <caption class="table__caption">Клиенты</caption>
                 <thead>
                     <tr>
                         <th class="table__id">
-                            <button type="button" class="btn btn-id js-sort-btn js-sort-btn--active" id="id-sort">ID
+                            <button type="button" class="btn-reset btn-id js-sort-btn js-sort-btn--active"
+                                id="id-sort">ID
                                 <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path id="id-svg"
@@ -62,7 +65,8 @@
                             </button>
                         </th>
                         <th class="table__name">
-                            <button type="button" class="btn btn-name js-sort-btn" id="surname-sort">Фамилия Имя Отчество
+                            <button type="button" class="btn-reset btn-name js-sort-btn" id="surname-sort">Фамилия Имя
+                                Отчество
                                 <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path id="surname-svg"
@@ -71,7 +75,8 @@
                             </button>
                         </th>
                         <th class="table__create">
-                            <button type="button" class="btn btn-created js-sort-btn" id="createdAt-sort">Дата и время создания
+                            <button type="button" class="btn-reset btn-created js-sort-btn" id="createdAt-sort">Дата и
+                                время создания
                                 <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path id="createdAt-svg"
@@ -80,7 +85,8 @@
                             </button>
                         </th>
                         <th class="table__edit">
-                            <button type="button" class="btn btn-edited js-sort-btn" id="updatedAt-sort">Последние изменения
+                            <button type="button" class="btn-reset btn-edited js-sort-btn" id="updatedAt-sort">Последние
+                                изменения
                                 <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path id="updatedAt-svg"
@@ -93,10 +99,16 @@
                     </tr>
                 </thead>
                 <tbody class="table__body" id="tbody">
+                    <tr class="spinner-row" id="spinner">
+                        <td class="spinner__container" colspan="6">
+                            <div class="spinner-border"></div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
-            <button id="add-button" class="btn btn-add">Добавить клиента</button>
+            <button id="add-button" class="btn-reset btn-add">Добавить клиента</button>
         </div>
+
     </main>
 </body>
 

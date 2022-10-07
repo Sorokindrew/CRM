@@ -71,7 +71,7 @@ input:active {
   display: flex;
 }
 
-.btn {
+.btn-reset {
   margin: 0;
   padding: 0;
   border: 0;
@@ -145,10 +145,11 @@ main {
   padding: 0 90px;
 }
 
-table {
+.main-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 40px;
+  caption-side: unset;
 }
 
 td,
@@ -257,14 +258,20 @@ thead {
 }
 
 .table__body {
+  position: relative;
   font-size: 14px;
   line-height: 19px;
   background-color: #fff;
 
 }
 
+.table__body tr {
+  min-height: 60px;
+}
+
 .table__body td {
-  height: 60px;
+  min-height: 60px;
+  padding: 0;
 }
 
 .contact-icon {
@@ -330,6 +337,27 @@ thead {
 }
 
 
+/*spinner*/
+.spinner-row {
+  position: relative;
+}
+
+.spinner__container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  text-align: center;
+  padding-top: 140px !important;
+  background-color: #fff;
+  z-index: 1000;
+}
+
+.spinner-border {
+  color: #9873FF;
+}
+
 /*modalCreate*/
 
 .modal-window {
@@ -339,6 +367,7 @@ thead {
   right: 0;
   bottom: 0;
   left: 0;
+  overflow-y: auto;
 }
 
 .modal-content {
@@ -346,9 +375,7 @@ thead {
   top: 10vh;
   left: 50%;
   width: 450px;
-  max-height: 90vh;
   transform: translateX(-50%);
-  overflow-y: auto;
 }
 
 .modal-form {
@@ -357,6 +384,7 @@ thead {
   min-height: 215px;
   padding: 25px 30px;
   background-color: #fff;
+  margin-bottom: 10vh;
 }
 
 .modal-title {
@@ -364,6 +392,14 @@ thead {
   font-weight: 700;
   font-size: 18px;
   line-height: 25px;
+}
+
+#errorBlock {
+  padding-bottom: 25px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 19px;
+  color: red;
 }
 
 .btn-add-contact {
@@ -379,7 +415,7 @@ thead {
   background-image: url('../img/add_circle_outline.svg');
   background-repeat: no-repeat;
   background-position: left center;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
   cursor: pointer;
 }
 
