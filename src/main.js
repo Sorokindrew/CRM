@@ -135,14 +135,17 @@
     //модальное окно создания нового клиента
     function modalCreate({ onSave }) {
         const inputClass = 'modal-input';
+        const inputFieldLabel = 'input-label'
         modal();
         const modalWindow = document.querySelector('.modal-window');
         const saveButton = document.createElement('button');
         const contactSection = document.createElement('div');
         const addContactButton = document.createElement('button');
-        // const nameLabel = document.createElement('label');
+        const nameLabel = document.createElement('label');
         const name = document.createElement('input');
+        const surnameLabel = document.createElement('label');
         const surname = document.createElement('input');
+        const lastNameLabel = document.createElement('label');
         const lastName = document.createElement('input');
 
         saveButton.textContent = 'Сохранить';
@@ -151,6 +154,9 @@
         name.classList.add(inputClass);
         surname.classList.add(inputClass);
         lastName.classList.add(inputClass);
+        nameLabel.classList.add(inputFieldLabel);
+        surnameLabel.classList.add(inputFieldLabel);
+        lastNameLabel.classList.add(inputFieldLabel);
 
         saveButton.classList.add('save-button', 'btn-reset');
         contactSection.classList.add('contact-section');
@@ -161,11 +167,13 @@
         surname.required = true;
         name.placeholder = 'Имя*';
         name.required = true;
-        // nameLabel.append(name);
+        nameLabel.append(name);
+        surnameLabel.append(surname);
+        lastNameLabel.append(lastName);
         lastName.placeholder = 'Отчество';
-        titleBlock.after(lastName);
-        titleBlock.after(name);
-        titleBlock.after(surname);
+        titleBlock.after(lastNameLabel);
+        titleBlock.after(nameLabel);
+        titleBlock.after(surnameLabel);
         contactSection.append(addContactButton);
         lastName.after(contactSection);
         const errorBlock = document.getElementById('errorBlock')
@@ -177,10 +185,30 @@
             addContactButton.before(addContactField());
         });
 
-        // name.addEventListener('input', ()=>{
-        //     nameLabel.innerHTML = 'Name' + nameLabel.innerHTML;
-        //     name.focus();
-        // })
+        name.addEventListener('focus', ()=>{
+            console.log(nameLabel.textContent.includes('Имя*'), nameLabel.textContent);
+            if (!nameLabel.textContent.includes('Имя*')) {
+                name.before('Имя*');
+            }
+            name.focus();
+            name.select();
+        })
+        surname.addEventListener('focus', ()=>{
+            console.log(surnameLabel.textContent.includes('Фамилия*'), surnameLabel.textContent);
+            if (!surnameLabel.textContent.includes('Фамилия*')) {
+                surname.before('Фамилия*');
+            }
+            surname.focus();
+            surname.select();
+        })
+        lastName.addEventListener('focus', ()=>{
+            console.log(lastNameLabel.textContent.includes('Отчество'), lastNameLabel.textContent);
+            if (!lastNameLabel.textContent.includes('Отчество')) {
+                lastName.before('Отчество');
+            }
+            lastName.focus();
+            lastName.select();
+        })
 
         saveButton.addEventListener('click', async (e) => {
             e.preventDefault();

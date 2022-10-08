@@ -480,6 +480,11 @@ thead {
   margin-bottom: 32px;
 }
 
+.input-label {
+  font-size: 10px;
+  color: #B0B0B0;
+}
+
 .modal-input::placeholder {
   font-family: 'Open Sans';
   font-style: normal;
