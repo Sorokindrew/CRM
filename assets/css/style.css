@@ -265,12 +265,8 @@ thead {
 
 }
 
-.table__body tr {
-  min-height: 60px;
-}
-
 .table__body td {
-  min-height: 60px;
+  height: 60px;
   padding: 0;
 }
 
@@ -478,6 +474,10 @@ thead {
   border: none;
   border-bottom: 1px solid #C8C5D1;
   margin-bottom: 32px;
+}
+
+.modal-input.invalid {
+  border-bottom: 1px solid #F06A4D;
 }
 
 .input-label {

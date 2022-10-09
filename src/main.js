@@ -185,24 +185,30 @@
             addContactButton.before(addContactField());
         });
 
-        name.addEventListener('focus', ()=>{
-            console.log(nameLabel.textContent.includes('Имя*'), nameLabel.textContent);
+        name.addEventListener('focus', () => {
+            errorBlock.innerHTML = '';
+            name.classList.remove('invalid');
+            surname.classList.remove('invalid');
             if (!nameLabel.textContent.includes('Имя*')) {
                 name.before('Имя*');
             }
             name.focus();
             name.select();
         })
-        surname.addEventListener('focus', ()=>{
-            console.log(surnameLabel.textContent.includes('Фамилия*'), surnameLabel.textContent);
+        surname.addEventListener('focus', () => {
+            errorBlock.innerHTML = '';
+            name.classList.remove('invalid');
+            surname.classList.remove('invalid');
             if (!surnameLabel.textContent.includes('Фамилия*')) {
                 surname.before('Фамилия*');
             }
             surname.focus();
             surname.select();
         })
-        lastName.addEventListener('focus', ()=>{
-            console.log(lastNameLabel.textContent.includes('Отчество'), lastNameLabel.textContent);
+        lastName.addEventListener('focus', () => {
+            errorBlock.innerHTML = '';
+            name.classList.remove('invalid');
+            surname.classList.remove('invalid');
             if (!lastNameLabel.textContent.includes('Отчество')) {
                 lastName.before('Отчество');
             }
@@ -473,21 +479,23 @@
         else if (surname.value.length < 4) response = response + 'Фамилия должна быть более трех символов<br>';
         else if (!surname.value.match(/^[А-ЯA-Z]/)) response = response + 'Фамилия должна начинаться с заглавной буквы<br>';
         else if (!surname.value.match(regEx)) response = response + 'Фамилия должна содержать только буквы<br>';
+        if (response.includes('Имя') || response.includes('имя')) name.classList.add('invalid');
+        if (response.includes('Фамилия') || response.includes('фамилию')) surname.classList.add('invalid');
         let contactSelectToCheck = Array.from(document.querySelectorAll('.contact-type'));
         let contactValueToCheck = Array.from(document.querySelectorAll('.contact-value'));
-        for (let index=0; index < contactSelectToCheck.length; index++) {
+        for (let index = 0; index < contactSelectToCheck.length; index++) {
             if (contactSelectToCheck[index].value == 'Email') {
                 const regExEmail = /\w+@\w+.[^0-9_\s\W]{2,4}/;
-                if (!contactValueToCheck[index].value.match(regExEmail)) response = response + 'Неверный формат электронной почты<br>'; 
+                if (!contactValueToCheck[index].value.match(regExEmail)) response = response + 'Неверный формат электронной почты<br>';
             }
             else if (contactSelectToCheck[index].value == 'Телефон' || contactSelectToCheck[index].value == 'Доп. телефон') {
                 const regExPhone = /\+7 \([0-9]{3,5}\) [0-9]{3}-[0-9]{2}-[0-9]{2}/;
                 if (!contactValueToCheck[index].value.match(regExPhone)) response = response + 'Введите телефон в формате +7 (495) 333-33-33<br>';
-                
+
             }
         }
 
-        
+
         if (response) return response;
     }
 
@@ -587,13 +595,13 @@
                 }
             },
             async onSave({ client, element }) {
-                
+
                 const response = await fetch(`http://localhost:3000/api/clients/`, {
                     method: "POST",
                     headers: { 'Content-Type': "application/json" },
                     body: JSON.stringify(client),
                 });
-                
+
                 if (response.status == 200 || response.status == 201) {
                     element.remove();
                     const clientData = await response.json();
