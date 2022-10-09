@@ -50,63 +50,63 @@
     </header>
     <main>
         <div class="container main__container">
-            <table class="main-table" id="table">
-                <caption class="table__caption">Клиенты</caption>
-                <thead>
-                    <tr>
-                        <th class="table__id">
-                            <button type="button" class="btn-reset btn-id js-sort-btn js-sort-btn--active"
-                                id="id-sort">ID
-                                <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path id="id-svg"
-                                        d="M2 6L2.705 6.705L5.5 3.915L5.5 10L6.5 10L6.5 3.915L9.29 6.71L10 6L6 2L2 6Z" />
-                                </svg>
-                            </button>
-                        </th>
-                        <th class="table__name">
-                            <button type="button" class="btn-reset btn-name js-sort-btn" id="surname-sort">Фамилия Имя
-                                Отчество
-                                <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path id="surname-svg"
-                                        d="M2 6L2.705 6.705L5.5 3.915L5.5 10L6.5 10L6.5 3.915L9.29 6.71L10 6L6 2L2 6Z" />
-                                </svg>
-                            </button>
-                        </th>
-                        <th class="table__create">
-                            <button type="button" class="btn-reset btn-created js-sort-btn" id="createdAt-sort">Дата и
-                                время создания
-                                <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path id="createdAt-svg"
-                                        d="M2 6L2.705 6.705L5.5 3.915L5.5 10L6.5 10L6.5 3.915L9.29 6.71L10 6L6 2L2 6Z" />
-                                </svg>
-                            </button>
-                        </th>
-                        <th class="table__edit">
-                            <button type="button" class="btn-reset btn-edited js-sort-btn" id="updatedAt-sort">Последние
-                                изменения
-                                <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path id="updatedAt-svg"
-                                        d="M2 6L2.705 6.705L5.5 3.915L5.5 10L6.5 10L6.5 3.915L9.29 6.71L10 6L6 2L2 6Z" />
-                                </svg>
-                            </button>
-                        </th>
-                        <th class="table__contacts">Контакты</th>
-                        <th class="table__actions">Действия</th>
-                    </tr>
-                </thead>
-                <tbody class="table__body" id="tbody">
-                    <tr class="spinner-row" id="spinner">
-                        <td class="spinner__container" colspan="6">
-                            <div class="spinner-border"></div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <button id="add-button" class="btn-reset btn-add">Добавить клиента</button>
+            <div class="content">
+                <table class="main-table" id="table">
+                    <caption class="table__caption">Клиенты</caption>
+                    <thead>
+                        <tr>
+                            <th class="table__id">
+                                <button type="button" class="btn-reset btn-id js-sort-btn js-sort-btn--active"
+                                    id="id-sort">ID
+                                    <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path id="id-svg"
+                                            d="M2 6L2.705 6.705L5.5 3.915L5.5 10L6.5 10L6.5 3.915L9.29 6.71L10 6L6 2L2 6Z" />
+                                    </svg>
+                                </button>
+                            </th>
+                            <th class="table__name">
+                                <button type="button" class="btn-reset btn-name js-sort-btn" id="surname-sort">Фамилия Имя
+                                    Отчество
+                                    <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path id="surname-svg"
+                                            d="M2 6L2.705 6.705L5.5 3.915L5.5 10L6.5 10L6.5 3.915L9.29 6.71L10 6L6 2L2 6Z" />
+                                    </svg>
+                                </button>
+                            </th>
+                            <th class="table__create">
+                                <button type="button" class="btn-reset btn-created js-sort-btn" id="createdAt-sort">Дата и
+                                    время создания
+                                    <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path id="createdAt-svg"
+                                            d="M2 6L2.705 6.705L5.5 3.915L5.5 10L6.5 10L6.5 3.915L9.29 6.71L10 6L6 2L2 6Z" />
+                                    </svg>
+                                </button>
+                            </th>
+                            <th class="table__edit">
+                                <button type="button" class="btn-reset btn-edited js-sort-btn" id="updatedAt-sort">Последние
+                                    изменения
+                                    <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path id="updatedAt-svg"
+                                            d="M2 6L2.705 6.705L5.5 3.915L5.5 10L6.5 10L6.5 3.915L9.29 6.71L10 6L6 2L2 6Z" />
+                                    </svg>
+                                </button>
+                            </th>
+                            <th class="table__contacts">Контакты</th>
+                            <th class="table__actions">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table__body" id="tbody">
+                    </tbody>
+                </table>
+                <button id="add-button" class="btn-reset btn-add">Добавить клиента</button>
+                <div class="spinner__container"  id="spinner">
+                    <div class="spinner-border"></div>
+                </div>
+            </div>
         </div>
 
     </main>

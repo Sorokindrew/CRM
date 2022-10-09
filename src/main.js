@@ -10,48 +10,54 @@
         cell2.textContent = client.surname + ' ' + client.name + ' ' + client.lastName;
         const cell3 = document.createElement('td');
         const createdSpan = document.createElement('span');
+        createdSpan.classList.add('date-span');
         cell3.textContent = formatDate(client.createdAt).date;
         createdSpan.textContent = formatDate(client.createdAt).time;
-        createdSpan.style.color = '#B0B0B0';
-        createdSpan.style.paddingLeft = '7px';
         cell3.append(createdSpan);
         const cell4 = document.createElement('td');
         const updatedSpan = document.createElement('span');
+        updatedSpan.classList.add('date-span');
         cell4.textContent = formatDate(client.updatedAt).date;
         updatedSpan.textContent = formatDate(client.updatedAt).time;
-        updatedSpan.style.color = '#B0B0B0';
-        updatedSpan.style.paddingLeft = '7px';
         cell4.append(updatedSpan);
         const cell5 = document.createElement('td');
+        cell5.style.display = 'flex';
+        cell5.style.alignItems = 'center';
+        cell5.style.flexWrap = 'wrap';
+        cell5.style.paddingRight = '40px';
         const contactList = client.contacts;
-        if (contactList.length > 0) {
+        if (contactList.length > 0 && contactList.length < 6) {
             contactList.forEach(el => {
-                const contactIcon = document.createElement('div');
-                contactIcon.classList.add('contact-icon');
-                if (el.type == 'Телефон' || el.type == 'Доп. телефон') {
-                    contactIcon.style = "background-image: url('../assets/img/phone.svg');";
-                }
-                else if (el.type == 'Email') {
-                    contactIcon.style = "background-image: url('../assets/img/mail.svg');";
-                }
-                else if (el.type == 'Facebook') {
-                    contactIcon.style = "background-image: url('../assets/img/fb.svg');";
-                }
-                else if (el.type == 'Vk') {
-                    contactIcon.style = "background-image: url('../assets/img/vk.svg');";
-                }
-                else {
-                    contactIcon.style = "background-image: url('../assets/img/other.svg');";
-                }
-                tippy(contactIcon, {
-                    content: `${el.type}: ${el.value}`
-                });
-                cell5.style.display = 'flex';
-                cell5.style.alignItems = 'center';
-                cell5.style.flexWrap = 'wrap';
-                cell5.style.paddingRight = '40px';
+                const contactIcon = addIconContact(el);
                 cell5.append(contactIcon);
             });
+        }
+        else if (contactList.length > 5) {
+            let index = 0;
+            while (index < 4) {
+                if (contactList[index] == undefined) break;
+                const contactIcon = addIconContact(contactList[index]);
+                cell5.append(contactIcon);
+                index++;
+            }
+            const contactIcon = document.createElement('div');
+            contactIcon.classList.add('contact-icon');
+            contactIcon.style = "background-image: url('../assets/img/circle_contacts.svg');";
+            const contactIconSpan = document.createElement('span');
+            contactIconSpan.classList.add('icon-span');
+            contactIconSpan.textContent = `+${contactList.length - 4}`;
+            contactIcon.append(contactIconSpan);
+            tippy(contactIcon, {
+                content: `Показать еще ${contactList.length - 4} контакта`
+            });
+            contactIcon.addEventListener('click', () => {
+                cell5.innerHTML = '';
+                contactList.forEach(el => {
+                    const contactIcon = addIconContact(el);
+                    cell5.append(contactIcon);
+                });
+            })
+            cell5.append(contactIcon);
         }
         const cell6 = document.createElement('td');
         const buttonWrapper = document.createElement('div');
@@ -81,6 +87,32 @@
 
         return row;
     };
+
+
+    //создание иконки контакта в ячейке Контакты
+    function addIconContact(contact) {
+        const contactIcon = document.createElement('div');
+        contactIcon.classList.add('contact-icon');
+        if (contact.type == 'Телефон' || contact.type == 'Доп. телефон') {
+            contactIcon.style = "background-image: url('../assets/img/phone.svg');";
+        }
+        else if (contact.type == 'Email') {
+            contactIcon.style = "background-image: url('../assets/img/mail.svg');";
+        }
+        else if (contact.type == 'Facebook') {
+            contactIcon.style = "background-image: url('../assets/img/fb.svg');";
+        }
+        else if (contact.type == 'Vk') {
+            contactIcon.style = "background-image: url('../assets/img/vk.svg');";
+        }
+        else {
+            contactIcon.style = "background-image: url('../assets/img/other.svg');";
+        }
+        tippy(contactIcon, {
+            content: `${contact.type}: ${contact.value}`
+        });
+        return contactIcon;
+    }
 
 
     //создание модального окна и формы
@@ -456,7 +488,7 @@
         //запрос актуальной информации с данными существующих клиентов с сервера
         const response = await fetch('http://localhost:3000/api/clients')
         const spinner = document.getElementById('spinner');
-        if (response) spinner.style.display = 'none';
+        if (response) spinner.style.visibility = 'hidden';
         return await response.json();
     }
     //поиск данных по введенному значению
